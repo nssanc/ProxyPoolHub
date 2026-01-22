@@ -2,9 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"log"
-	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
