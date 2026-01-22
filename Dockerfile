@@ -2,6 +2,7 @@ FROM golang:1.21-alpine AS backend-builder
 
 WORKDIR /app/backend
 COPY backend/ .
+RUN go mod tidy
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/proxypoolhub .
 
