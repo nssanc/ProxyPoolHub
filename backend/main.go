@@ -55,8 +55,12 @@ func main() {
 		})
 	}
 
-	// Serve static files
-	router.Static("/", "./frontend/dist")
+	// Serve static files as fallback
+	router.NoRoute(func(c *gin.Context) {
+		c.File("./frontend/dist/index.html")
+	})
+	router.StaticFile("/favicon.ico", "./frontend/dist/favicon.ico")
+	router.Static("/assets", "./frontend/dist/assets")
 
 	port := os.Getenv("PORT")
 	if port == "" {
