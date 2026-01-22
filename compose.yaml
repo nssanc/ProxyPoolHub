@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  proxypoolhub:
+    image: nssanc/proxypoolhub:latest
+    container_name: proxypoolhub
+    restart: unless-stopped
+    ports:
+      - "3000:3000"   # Web管理界面
+      - "8080:8080"   # HTTP代理端口
+      - "1080:1080"   # SOCKS5代理端口
+    environment:
+      - PORT=3000
+    volumes:
+      - ./data:/app/data
+    networks:
+      - proxypoolhub-network
+
+networks:
+  proxypoolhub-network:
+    driver: bridge
