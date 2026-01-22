@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  proxypoolhub:
+    build: .
+    container_name: proxypoolhub
+    ports:
+      - "3000:3000"   # Web UI
+      - "8080:8080"   # HTTP Proxy
+      - "1080:1080"   # SOCKS5 Proxy
+    environment:
+      - PORT=3000
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
