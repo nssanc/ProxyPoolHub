@@ -1,5 +1,5 @@
 import { Trash2, RefreshCw } from 'lucide-react';
-import { Proxy } from '../types';
+import type { Proxy } from '../types';
 import { proxyApi } from '../api';
 
 interface ProxyListProps {

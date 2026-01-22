@@ -1,5 +1,5 @@
-import { Activity, Server, CheckCircle, XCircle } from 'lucide-react';
-import { Stats, Proxy } from '../types';
+import { Activity, Server, CheckCircle } from 'lucide-react';
+import type { Stats, Proxy } from '../types';
 
 interface DashboardProps {
   stats: Stats | null;

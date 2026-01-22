@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Upload } from 'lucide-react';
 import { proxyApi } from '../api';
-import { ProxyType } from '../types';
+import type { ProxyType } from '../types';
 
 interface AddProxyProps {
   onSuccess: () => void;

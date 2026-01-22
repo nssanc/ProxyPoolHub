@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Save, Settings } from 'lucide-react';
-import { Config, RotationMode } from '../types';
+import type { Config, RotationMode } from '../types';
 import { proxyApi } from '../api';
 
 interface ConfigurationProps {
