@@ -1,15 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"encoding/base64"
-	"fmt"
-	"io"
 	"log"
-	"net"
 	"net/http"
 	"strings"
-	"sync/atomic"
 )
 
 type ProxyServer struct {

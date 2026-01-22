@@ -1,14 +1,8 @@
 package main
 
 import (
-	"encoding/json"
-	"net/http"
 	"sync"
-	"sync/atomic"
 	"time"
-
-	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 type ProxyType string
