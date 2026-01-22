@@ -5,7 +5,7 @@ import ProxyList from './components/ProxyList';
 import AddProxy from './components/AddProxy';
 import Configuration from './components/Configuration';
 import { proxyApi } from './api';
-import { Proxy, Config, Stats } from './types';
+import type { Proxy, Config, Stats } from './types';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
