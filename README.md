@@ -28,11 +28,24 @@ A modern, feature-rich proxy pool management system with a beautiful web interfa
 
 ## Quick Start
 
+### Using Docker Hub Image (Easiest)
+
+```bash
+# Pull and run the latest image (supports amd64 and arm64)
+docker run -d \
+  --name proxypoolhub \
+  -p 3000:3000 \
+  -p 8080:8080 \
+  -p 1080:1080 \
+  -v $(pwd)/data:/app/data \
+  nssanc/proxypoolhub:latest
+```
+
 ### Using Docker Compose (Recommended)
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ProxyPoolHub.git
+git clone https://github.com/nssanc/ProxyPoolHub.git
 cd ProxyPoolHub
 
 # Start the service
