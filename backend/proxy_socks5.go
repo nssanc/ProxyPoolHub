@@ -3,10 +3,8 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
-	"io"
 	"log"
 	"net"
-	"sync/atomic"
 )
 
 func (ps *ProxyServer) StartSOCKS5Proxy(addr string) {
