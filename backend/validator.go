@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"time"
 
-	"golang.org/x/net/proxy"
+	socks "golang.org/x/net/proxy"
 )
 
 func (p *ProxyPool) validateProxy(proxy *Proxy) {
@@ -93,15 +93,15 @@ func (p *ProxyPool) buildProxyURL(proxy *Proxy) *url.URL {
 
 func (p *ProxyPool) createSOCKS5Client(proxy *Proxy) *http.Client {
 	// 创建 SOCKS5 拨号器
-	var auth *proxy.Auth
+	var auth *socks.Auth
 	if proxy.Username != "" && proxy.Password != "" {
-		auth = &proxy.Auth{
+		auth = &socks.Auth{
 			User:     proxy.Username,
 			Password: proxy.Password,
 		}
 	}
 
-	dialer, err := proxy.SOCKS5("tcp", fmt.Sprintf("%s:%d", proxy.Address, proxy.Port), auth, &net.Dialer{
+	dialer, err := socks.SOCKS5("tcp", fmt.Sprintf("%s:%d", proxy.Address, proxy.Port), auth, &net.Dialer{
 		Timeout:   time.Duration(p.config.Timeout) * time.Second,
 		KeepAlive: 30 * time.Second,
 	})
