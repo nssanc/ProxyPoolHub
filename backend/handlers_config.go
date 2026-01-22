@@ -79,6 +79,14 @@ func (p *ProxyPool) UpdateConfigHandler(c *gin.Context) {
 	p.config = newConfig
 	p.mu.Unlock()
 
+	// 保存到数据库
+	if p.db != nil {
+		if err := p.db.SaveConfig(&newConfig); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save config"})
+			return
+		}
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Configuration updated successfully",
 		"config":  newConfig,

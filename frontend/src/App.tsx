@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Activity, Database, Plus, Settings, Upload } from 'lucide-react';
+import { Activity, Database, Plus, Settings, Upload, Zap } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import ProxyList from './components/ProxyList';
 import AddProxy from './components/AddProxy';
@@ -39,40 +39,36 @@ function App() {
     { id: 'proxies', label: '代理列表', icon: Database },
     { id: 'add', label: '添加代理', icon: Plus },
     { id: 'import', label: '批量导入', icon: Upload },
-    { id: 'config', label: '配置', icon: Settings },
+    { id: 'config', label: '系统配置', icon: Settings },
   ];
 
   return (
-    <div className="min-h-screen relative z-10">
-      {/* 顶部标题栏 */}
-      <header className="border-b border-[var(--cyber-cyan)]/20 bg-[var(--cyber-surface)]/80 backdrop-blur-xl relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--cyber-cyan)]/5 via-transparent to-[var(--cyber-magenta)]/5"></div>
-        <div className="container mx-auto px-6 py-6 relative z-10">
+    <div className="min-h-screen">
+      {/* 顶部导航栏 */}
+      <header className="card sticky top-0 z-50 border-b border-teal-500/20">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-[var(--cyber-cyan)] to-[var(--cyber-magenta)] rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(0,240,255,0.5)]">
-                  <span className="text-white font-['Orbitron'] font-bold text-xl">P</span>
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500 to-purple-600 flex items-center justify-center animate-pulse-glow">
+                  <Zap className="w-7 h-7 text-white" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-[var(--cyber-cyan)] to-[var(--cyber-magenta)] rounded-lg blur-xl opacity-50 animate-pulse"></div>
               </div>
               <div>
-                <h1 className="text-3xl font-['Orbitron'] font-bold bg-gradient-to-r from-[var(--cyber-cyan)] via-[var(--cyber-purple)] to-[var(--cyber-magenta)] bg-clip-text text-transparent tracking-wider">
-                  代理池管理系统
-                </h1>
-                <p className="text-sm text-[var(--cyber-cyan)]/60 font-['Rajdhani'] tracking-wide">PROXY POOL MANAGEMENT SYSTEM</p>
+                <h1 className="text-3xl font-bold gradient-text">ProxyPool Hub</h1>
+                <p className="text-xs text-slate-400 mt-0.5">智能代理池管理系统</p>
               </div>
             </div>
-            <div className="flex items-center space-x-2 text-xs font-['Rajdhani'] text-[var(--cyber-cyan)]">
-              <div className="w-2 h-2 bg-[var(--cyber-cyan)] rounded-full animate-pulse shadow-[0_0_10px_rgba(0,240,255,0.8)]"></div>
-              <span>SYSTEM ONLINE</span>
+            <div className="flex items-center space-x-3 px-4 py-2 card rounded-full">
+              <div className="w-2.5 h-2.5 bg-teal-400 rounded-full animate-pulse"></div>
+              <span className="text-sm text-slate-300 font-medium">系统运行中</span>
             </div>
           </div>
         </div>
       </header>
 
-      {/* 导航栏 */}
-      <nav className="border-b border-[var(--cyber-cyan)]/10 bg-[var(--cyber-surface)]/50 backdrop-blur-xl sticky top-0 z-50">
+      {/* 标签导航 */}
+      <nav className="card border-b border-teal-500/10">
         <div className="container mx-auto px-6">
           <div className="flex space-x-2">
             {tabs.map((tab) => {
@@ -81,23 +77,21 @@ function App() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-4 font-['Rajdhani'] font-semibold text-base transition-all relative group ${
-                    activeTab === tab.id
-                      ? 'text-[var(--cyber-cyan)]'
-                      : 'text-gray-400 hover:text-[var(--cyber-cyan)]'
-                  }`}
+                  className={`
+                    relative px-6 py-4 font-medium transition-all duration-300 rounded-t-lg
+                    ${activeTab === tab.id
+                      ? 'text-teal-400 bg-teal-500/10'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
+                    }
+                  `}
                 >
                   <div className="flex items-center space-x-2">
                     <Icon className="w-4 h-4" />
                     <span>{tab.label}</span>
                   </div>
                   {activeTab === tab.id && (
-                    <>
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--cyber-cyan)] to-transparent shadow-[0_0_10px_rgba(0,240,255,0.8)]"></div>
-                      <div className="absolute inset-0 bg-[var(--cyber-cyan)]/5 rounded-t-lg"></div>
-                    </>
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-purple-600 rounded-full"></div>
                   )}
-                  <div className="absolute inset-0 bg-[var(--cyber-cyan)]/0 group-hover:bg-[var(--cyber-cyan)]/5 transition-colors rounded-t-lg"></div>
                 </button>
               );
             })}
@@ -107,11 +101,13 @@ function App() {
 
       {/* 主内容区 */}
       <main className="container mx-auto px-6 py-8">
-        {activeTab === 'dashboard' && <Dashboard stats={stats} proxies={proxies} />}
-        {activeTab === 'proxies' && <ProxyList proxies={proxies} onRefresh={loadData} />}
-        {activeTab === 'add' && <AddProxy onSuccess={loadData} />}
-        {activeTab === 'import' && <div className="text-center text-gray-400 py-20">批量导入功能开发中...</div>}
-        {activeTab === 'config' && config && <Configuration config={config} onUpdate={loadData} />}
+        <div className="animate-fadeInUp">
+          {activeTab === 'dashboard' && <Dashboard stats={stats} proxies={proxies} />}
+          {activeTab === 'proxies' && <ProxyList proxies={proxies} onRefresh={loadData} />}
+          {activeTab === 'add' && <AddProxy onSuccess={loadData} />}
+          {activeTab === 'import' && <AddProxy onSuccess={loadData} />}
+          {activeTab === 'config' && config && <Configuration config={config} onUpdate={loadData} />}
+        </div>
       </main>
     </div>
   );

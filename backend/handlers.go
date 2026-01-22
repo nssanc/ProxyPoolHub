@@ -21,6 +21,14 @@ func (p *ProxyPool) AddProxy(proxy *Proxy) error {
 	proxy.Status = StatusInactive
 
 	p.proxies[proxy.ID] = proxy
+
+	// 保存到数据库
+	if p.db != nil {
+		if err := p.db.SaveProxy(proxy); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -30,6 +38,14 @@ func (p *ProxyPool) RemoveProxy(id string) error {
 
 	delete(p.proxies, id)
 	p.rebuildActiveProxies()
+
+	// 从数据库删除
+	if p.db != nil {
+		if err := p.db.DeleteProxy(id); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

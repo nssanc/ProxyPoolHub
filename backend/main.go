@@ -9,8 +9,21 @@ import (
 )
 
 func main() {
-	// Initialize proxy pool
-	pool := NewProxyPool()
+	// Initialize database
+	db, err := NewDatabase("./data/proxypoolhub.db")
+	if err != nil {
+		log.Fatalf("Failed to initialize database: %v", err)
+	}
+	defer db.Close()
+
+	// Initialize proxy pool with database
+	pool := NewProxyPoolWithDB(db)
+
+	// Load proxies and config from database
+	if err := pool.LoadFromDatabase(); err != nil {
+		log.Printf("Failed to load from database: %v", err)
+	}
+
 	go pool.StartHealthCheck()
 	go pool.StartAutoRefresh()
 

@@ -64,6 +64,7 @@ type ProxyPool struct {
 	config       Config
 	currentIndex uint32
 	stats        Stats
+	db           *Database
 }
 
 type Stats struct {
@@ -88,4 +89,54 @@ func NewProxyPool() *ProxyPool {
 			RefreshInterval: 300,
 		},
 	}
+}
+
+// NewProxyPoolWithDB 创建带数据库的代理池
+func NewProxyPoolWithDB(db *Database) *ProxyPool {
+	return &ProxyPool{
+		proxies: make(map[string]*Proxy),
+		db:      db,
+		config: Config{
+			RotationMode:    Sequential,
+			HealthCheckURL:  "http://www.google.com",
+			CheckInterval:   60,
+			Timeout:         10,
+			MaxFailCount:    3,
+			EnableAuth:      false,
+			AutoRefresh:     true,
+			RefreshInterval: 300,
+		},
+	}
+}
+
+// LoadFromDatabase 从数据库加载代理和配置
+func (p *ProxyPool) LoadFromDatabase() error {
+	if p.db == nil {
+		return nil
+	}
+
+	// 加载配置
+	config, err := p.db.LoadConfig()
+	if err == nil {
+		p.mu.Lock()
+		p.config = *config
+		p.mu.Unlock()
+	}
+
+	// 加载代理
+	proxies, err := p.db.LoadProxies()
+	if err != nil {
+		return err
+	}
+
+	p.mu.Lock()
+	for _, proxy := range proxies {
+		p.proxies[proxy.ID] = proxy
+		if proxy.Status == StatusActive {
+			p.activeProxies = append(p.activeProxies, proxy)
+		}
+	}
+	p.mu.Unlock()
+
+	return nil
 }

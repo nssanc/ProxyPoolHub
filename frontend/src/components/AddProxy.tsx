@@ -73,133 +73,124 @@ export default function AddProxy({ onSuccess }: AddProxyProps) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-['Orbitron'] font-bold text-[var(--cyber-cyan)] flex items-center">
-        <span className="mr-3">添加代理</span>
-        <div className="h-px flex-1 max-w-xs bg-gradient-to-r from-[var(--cyber-cyan)] to-transparent"></div>
-      </h2>
+      <h2 className="text-3xl font-bold gradient-text">添加代理</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 单个添加 */}
-        <div className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--cyber-cyan)]/10 to-[var(--cyber-magenta)]/10 rounded-lg blur-xl opacity-50"></div>
-          <div className="relative bg-[var(--cyber-surface)]/80 backdrop-blur-xl border border-[var(--cyber-cyan)]/30 rounded-lg p-6">
-            <h3 className="text-lg font-['Rajdhani'] font-bold text-white mb-6 flex items-center">
-              <Plus className="w-5 h-5 mr-2 text-[var(--cyber-cyan)]" />
-              单个添加
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-['Rajdhani'] font-semibold text-[var(--cyber-cyan)]/80 mb-2">地址</label>
-                <input
-                  type="text"
-                  value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full px-4 py-3 bg-[var(--cyber-bg)]/50 border border-[var(--cyber-cyan)]/30 rounded-lg text-white font-['Rajdhani'] focus:outline-none focus:border-[var(--cyber-cyan)] focus:shadow-[0_0_10px_rgba(0,240,255,0.3)] transition-all"
-                  placeholder="192.168.1.1"
-                  required
-                />
-              </div>
+        <div className="card rounded-2xl p-6">
+          <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+            <Plus className="w-5 h-5 mr-2 text-teal-400" />
+            单个添加
+          </h3>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-slate-400 mb-2">地址</label>
+              <input
+                type="text"
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                className="w-full px-4 py-3 bg-slate-900/50 border border-teal-500/30 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-all"
+                placeholder="192.168.1.1"
+                required
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-['Rajdhani'] font-semibold text-[var(--cyber-cyan)]/80 mb-2">端口</label>
-                <input
-                  type="number"
-                  value={formData.port}
-                  onChange={(e) => setFormData({ ...formData, port: e.target.value })}
-                  className="w-full px-4 py-3 bg-[var(--cyber-bg)]/50 border border-[var(--cyber-cyan)]/30 rounded-lg text-white font-['Rajdhani'] focus:outline-none focus:border-[var(--cyber-cyan)] focus:shadow-[0_0_10px_rgba(0,240,255,0.3)] transition-all"
-                  placeholder="8080"
-                  required
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-semibold text-slate-400 mb-2">端口</label>
+              <input
+                type="number"
+                value={formData.port}
+                onChange={(e) => setFormData({ ...formData, port: e.target.value })}
+                className="w-full px-4 py-3 bg-slate-900/50 border border-teal-500/30 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-all"
+                placeholder="8080"
+                required
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-['Rajdhani'] font-semibold text-[var(--cyber-cyan)]/80 mb-2">类型</label>
-                <select
-                  value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value as ProxyType })}
-                  className="w-full px-4 py-3 bg-[var(--cyber-bg)]/50 border border-[var(--cyber-cyan)]/30 rounded-lg text-white font-['Rajdhani'] focus:outline-none focus:border-[var(--cyber-cyan)] focus:shadow-[0_0_10px_rgba(0,240,255,0.3)] transition-all"
-                >
-                  <option value="http">HTTP</option>
-                  <option value="https">HTTPS</option>
-                  <option value="socks5">SOCKS5</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-['Rajdhani'] font-semibold text-[var(--cyber-cyan)]/80 mb-2">用户名（可选）</label>
-                <input
-                  type="text"
-                  value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full px-4 py-3 bg-[var(--cyber-bg)]/50 border border-[var(--cyber-cyan)]/30 rounded-lg text-white font-['Rajdhani'] focus:outline-none focus:border-[var(--cyber-cyan)] focus:shadow-[0_0_10px_rgba(0,240,255,0.3)] transition-all"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-['Rajdhani'] font-semibold text-[var(--cyber-cyan)]/80 mb-2">密码（可选）</label>
-                <input
-                  type="password"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full px-4 py-3 bg-[var(--cyber-bg)]/50 border border-[var(--cyber-cyan)]/30 rounded-lg text-white font-['Rajdhani'] focus:outline-none focus:border-[var(--cyber-cyan)] focus:shadow-[0_0_10px_rgba(0,240,255,0.3)] transition-all"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full px-4 py-3 bg-gradient-to-r from-[var(--cyber-cyan)] to-[var(--cyber-purple)] rounded-lg text-white font-['Rajdhani'] font-bold hover:shadow-[0_0_20px_rgba(0,240,255,0.5)] transition-all"
+            <div>
+              <label className="block text-sm font-semibold text-slate-400 mb-2">类型</label>
+              <select
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value as ProxyType })}
+                className="w-full px-4 py-3 bg-slate-900/50 border border-teal-500/30 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-all"
               >
-                添加代理
-              </button>
-            </form>
-          </div>
+                <option value="http">HTTP</option>
+                <option value="https">HTTPS</option>
+                <option value="socks5">SOCKS5</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-400 mb-2">用户名（可选）</label>
+              <input
+                type="text"
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                className="w-full px-4 py-3 bg-slate-900/50 border border-teal-500/30 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-400 mb-2">密码（可选）</label>
+              <input
+                type="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                className="w-full px-4 py-3 bg-slate-900/50 border border-teal-500/30 rounded-xl text-white focus:outline-none focus:border-teal-500 transition-all"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full px-4 py-3 bg-gradient-to-r from-teal-500 to-purple-600 rounded-xl text-white font-semibold glow-teal"
+            >
+              添加代理
+            </button>
+          </form>
         </div>
 
         {/* 批量导入 */}
-        <div className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--cyber-magenta)]/10 to-[var(--cyber-purple)]/10 rounded-lg blur-xl opacity-50"></div>
-          <div className="relative bg-[var(--cyber-surface)]/80 backdrop-blur-xl border border-[var(--cyber-cyan)]/30 rounded-lg p-6">
-            <h3 className="text-lg font-['Rajdhani'] font-bold text-white mb-6 flex items-center">
-              <Upload className="w-5 h-5 mr-2 text-[var(--cyber-magenta)]" />
-              批量导入
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-['Rajdhani'] font-semibold text-[var(--cyber-cyan)]/80 mb-2">
-                  上传文件或粘贴代理（每行一个：地址:端口:用户名:密码）
+        <div className="card rounded-2xl p-6">
+          <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+            <Upload className="w-5 h-5 mr-2 text-purple-400" />
+            批量导入
+          </h3>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-slate-400 mb-2">
+                上传文件或粘贴代理（每行一个：地址:端口:用户名:密码）
+              </label>
+
+              {/* 文件上传按钮 */}
+              <div className="mb-4">
+                <label className="flex items-center justify-center w-full px-4 py-3 bg-slate-900/50 border-2 border-dashed border-purple-500/30 rounded-xl cursor-pointer hover:border-purple-500 hover:bg-purple-500/5 transition-all group/upload">
+                  <FileUp className="w-5 h-5 mr-2 text-purple-400 group-hover/upload:animate-bounce" />
+                  <span className="text-white font-semibold">
+                    {file ? file.name : '点击选择文件'}
+                  </span>
+                  <input
+                    type="file"
+                    accept=".txt"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
                 </label>
-
-                {/* 文件上传按钮 */}
-                <div className="mb-4">
-                  <label className="flex items-center justify-center w-full px-4 py-3 bg-[var(--cyber-bg)]/50 border-2 border-dashed border-[var(--cyber-cyan)]/30 rounded-lg cursor-pointer hover:border-[var(--cyber-cyan)] hover:bg-[var(--cyber-cyan)]/5 transition-all group/upload">
-                    <FileUp className="w-5 h-5 mr-2 text-[var(--cyber-cyan)] group-hover/upload:animate-bounce" />
-                    <span className="text-white font-['Rajdhani'] font-semibold">
-                      {file ? file.name : '点击选择文件'}
-                    </span>
-                    <input
-                      type="file"
-                      accept=".txt"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
-
-                <textarea
-                  value={bulkText}
-                  onChange={(e) => setBulkText(e.target.value)}
-                  className="w-full h-64 px-4 py-3 bg-[var(--cyber-bg)]/50 border border-[var(--cyber-cyan)]/30 rounded-lg text-[var(--cyber-cyan)] font-mono text-sm focus:outline-none focus:border-[var(--cyber-cyan)] focus:shadow-[0_0_10px_rgba(0,240,255,0.3)] transition-all"
-                  placeholder="192.168.1.1:8080&#10;192.168.1.2:8080:user:pass"
-                />
               </div>
-              <button
-                onClick={handleBulkImport}
-                disabled={!bulkText.trim()}
-                className="w-full px-4 py-3 bg-gradient-to-r from-[var(--cyber-magenta)] to-[var(--cyber-purple)] rounded-lg text-white font-['Rajdhani'] font-bold hover:shadow-[0_0_20px_rgba(255,0,110,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                导入代理
-              </button>
+
+              <textarea
+                value={bulkText}
+                onChange={(e) => setBulkText(e.target.value)}
+                className="w-full h-64 px-4 py-3 bg-slate-900/50 border border-purple-500/30 rounded-xl text-purple-300 font-mono text-sm focus:outline-none focus:border-purple-500 transition-all"
+                placeholder="192.168.1.1:8080&#10;192.168.1.2:8080:user:pass"
+              />
             </div>
+            <button
+              onClick={handleBulkImport}
+              disabled={!bulkText.trim()}
+              className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl text-white font-semibold glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              导入代理
+            </button>
           </div>
         </div>
       </div>
