@@ -3,6 +3,7 @@ package main
 import (
 	"math/rand"
 	"net/http"
+	"sync/atomic"
 	"time"
 
 	"github.com/gin-gonic/gin"
